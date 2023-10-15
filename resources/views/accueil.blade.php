@@ -11,7 +11,7 @@
         rel='stylesheet' type='text/css'>
     <title> Florentin Toupet</title>
 </head>
-@include('navbar')
+@include('navbar', ['appName' => 'Florentin Toupet'])
 
 <body>
     @extends('layout')
