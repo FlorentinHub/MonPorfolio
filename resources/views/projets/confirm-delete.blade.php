@@ -7,8 +7,7 @@
     <form method="POST" action="{{ route('projet.destroy', $projet->id) }}">
         @csrf
         @method('DELETE')
-
         <button type="submit" class="btn btn-danger">Oui, supprimer le projet</button>
-        <button href="{{ route('accueil') }}" class="btn btn-secondary">Annuler</button>
     </form>
+    <button href="{{ route('accueil') }}" class="btn btn-secondary">Annuler</button>
 @endsection

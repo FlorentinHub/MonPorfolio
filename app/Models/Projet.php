@@ -16,5 +16,6 @@ class Projet extends Model
         'pourcentage_complet',
         'lien_github',
         'description',
+        'image',
     ];
 }

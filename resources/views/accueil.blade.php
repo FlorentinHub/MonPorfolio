@@ -43,9 +43,10 @@
                                     <div class="follow_count"></div>
                                     <a href="{{ route('projet.details', $projet->id) }}" class="btn">Détails</a>
                                     @if (auth()->check() && auth()->user()->isAdmin)
-                                    <a href="{{ route('projet.edit', $projet->id) }}" class="btn">Modifier</a>
-                                    <a href="{{ route('projet.confirmDelete', $projet->id) }}" class="btn btn-danger">Supprimer</a>
-                                @endif
+                                        <a href="{{ route('projet.edit', $projet->id) }}" class="btn">Modifier</a>
+                                        <a href="{{ route('projet.confirmDelete', $projet->id) }}"
+                                            class="btn btn-danger">Supprimer</a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="right_col">
@@ -63,6 +64,9 @@
         </section>
         <footer>
             <p>&copy; 2023 - FlorentinToupet</p>
+            @if (auth()->check())
+                <p>Connecté en tant que <b>{{ auth()->user()->name }}</b></p>
+            @endif
         </footer>
     </body>
     <style>
@@ -145,6 +149,7 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            margin-bottom: 5px;
         }
 
         .btn:hover {
@@ -341,3 +346,58 @@
     </style>
 
     </html>
+
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Vous n\'êtes pas autorisé à accéder à cette page en tant qu\'administrateur.', // Utilisez html au lieu de text
+                customClass: {
+                    popup: 'custom-swal2-popup',
+                    title: 'custom-swal2-title',
+                    content: 'custom-swal2-content',
+                    confirmButton: 'custom-swal2-confirm'
+                }
+            });
+        @endif
+    </script>
+    <style>
+        .swal2-popup {
+            border-radius: 10px;
+            border-color: #ff0000;
+            background-color: black;
+        }
+
+        .swal2-title {
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .swal2-content {
+            color: #fff;
+            font-size: 18px;
+        }
+        .swal2-actions {
+            text-align: center;
+        }
+
+        .swal2-confirm {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .custom-swal2-confirm {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>

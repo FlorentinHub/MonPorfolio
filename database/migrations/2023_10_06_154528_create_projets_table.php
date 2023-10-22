@@ -16,6 +16,9 @@ class CreateProjetsTable extends Migration
             $table->integer('pourcentage_complet');
             $table->string('lien_github')->nullable();
             $table->text('description')->nullable();
+            $table->string('image_projet')->nullable();
+            $table->unsignedBigInteger('collaborateur_id')->nullable();
+            $table->foreign('id')->references('id')->on('collaborateurs');
             $table->timestamps();
         });
     }
