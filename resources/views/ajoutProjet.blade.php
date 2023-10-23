@@ -1,6 +1,6 @@
 @include('navbar', ['appName' => 'Florentin Toupet'])
 <div>
-    <form action="/projet" method="POST">
+    <form action="/projet" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="nom_projet">Nom du Projet:</label>
         <input type="text" id="nom_projet" name="nom_projet" required><br>
@@ -29,12 +29,22 @@
                 @foreach ($collaborateurs as $collaborateur)
                     <option value="{{ $collaborateur->id }}">{{ $collaborateur->nom_collaborateur }}</option>
                 @endforeach
-            </select><br><br>
+            </select>
+            <br><br>
         @else
             <p> Aucune Collaborateur disponible </p>
         @endif
 
-        <input type="file" name="image_projet"><br><br>
-        <input type="submit" value="Ajouter Projet">
+        <input type="file" name="image_projet" /><br><br>
+        <input type="submit" value="Ajouter Projet"/>
     </form>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 </div>

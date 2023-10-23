@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Projet;
 use App\Models\Collaborateur;
 use App\Http\Controllers\CollaborateurController;
+use Illuminate\Support\Facades\Storage;
 
 class ProjetController extends Controller
 {
@@ -41,79 +42,81 @@ class ProjetController extends Controller
 
 
     public function uploadImage(Request $request, $id)
-{
-    // Valider le fichier image téléchargé
-    $request->validate([
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Exemple : Max 2MB
-    ]);
+    {
+        // Valider le fichier image téléchargé
+        $request->validate([
+            'image_projet' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Exemple : Max 2MB
+        ]);
 
-    // Vérifier si le projet existe
-    $projet = Projet::find($id);
+        // Vérifier si le projet existe
+        $projet = Projet::find($id);
 
-    if (!$projet) {
-        // Gérer le cas où le projet n'existe pas
-        return redirect()->back()->with('error', 'Projet non trouvé.');
+        if (!$projet) {
+            // Gérer le cas où le projet n'existe pas
+            return redirect()->back()->with('error', 'Projet non trouvé.');
+        }
+
+        // Télécharger l'image et la stocker
+        $image = $request->file('image_projet');
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('images/projets'), $imageName);
+
+        // Mettre à jour le champ image du projet
+        $projet->image_projet = $imageName; // Utilisez 'image_projet' au lieu de 'image'
+        $projet->save();
+
+        return redirect()->back()->with('success', 'Image du projet mise à jour.');
     }
 
-    // Télécharger l'image et la stocker
-    $image = $request->file('image');
-    $imageName = time() . '.' . $image->extension();
-    $image->move(public_path('images/projets'), $imageName);
 
-    // Mettre à jour le champ image du projet
-    $projet->image = $imageName;
-    $projet->save();
+    public function addCollaborator($projetId, $collaboratorId)
+    {
+        // Valider l'existence du projet et du collaborateur
+        $projet = Projet::find($projetId);
+        $collaborator = Collaborateur::find($collaboratorId);
 
-    return redirect()->back()->with('success', 'Image du projet mise à jour.');
-}
+        if (!$projet || !$collaborator) {
+            // Gérer le cas où le projet ou le collaborateur n'existe pas
+            return redirect()->back()->with('error', 'Projet ou collaborateur non trouvé.');
+        }
 
-public function addCollaborator($projetId, $collaboratorId)
-{
-    // Valider l'existence du projet et du collaborateur
-    $projet = Projet::find($projetId);
-    $collaborator = Collaborateur::find($collaboratorId);
+        // Ajouter le collaborateur au projet (assurez-vous d'avoir correctement configuré la relation)
+        $projet->collaborators()->attach($collaborator);
 
-    if (!$projet || !$collaborator) {
-        // Gérer le cas où le projet ou le collaborateur n'existe pas
-        return redirect()->back()->with('error', 'Projet ou collaborateur non trouvé.');
+        return redirect()->back()->with('success', 'Collaborateur ajouté au projet.');
     }
 
-    // Ajouter le collaborateur au projet (assurez-vous d'avoir correctement configuré la relation)
-    $projet->collaborators()->attach($collaborator);
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nom_projet' => 'required',
+            'type_projet' => 'required',
+            'complexite' => 'required|integer',
+            'pourcentage_complet' => 'required|integer',
+            'lien_github' => 'url|nullable',
+            'description' => 'nullable',
+            'image_projet' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'collaborateurs' => 'array',
+        ]);
 
-    return redirect()->back()->with('success', 'Collaborateur ajouté au projet.');
-}
+        if ($request->hasFile('image_projet')) {
+            $imagePath = $request->file('image_projet');
+            $imageName = 'images/' . $imagePath->hashName();
+            
+            Storage::disk('public')->put('images', $imagePath);
 
-   public function store(Request $request)
-{
-    // Validation des données
-    $validatedData = $request->validate([
-        'nom_projet' => 'required',
-        'type_projet' => 'required',
-        'complexite' => 'required|integer',
-        'pourcentage_complet' => 'required|integer',
-        'lien_github' => 'url|nullable',
-        'description' => 'nullable',
-        'image_projet' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        'collaborateurs' => 'array',
-    ]);
+            $validatedData['image_projet'] = $imageName;
+        }
 
-    // Téléchargement de l'image si elle est fournie
-    if ($request->hasFile('image_projet')) {
-        $imagePath = $request->file('image_projet')->store('images');
-        $validatedData['image_projet'] = $imagePath;
+        $projet = Projet::create($validatedData);
+
+        // Lier des collaborateurs au projet si des collaborateurs sont sélectionnés
+        if ($request->has('collaborateurs')) {
+            $projet->collaborateurs()->attach($request->input('collaborateurs'));
+        }
+
+        return redirect('/');
     }
-
-    // Création du projet avec les données validées
-    $projet = Projet::create($validatedData);
-
-    // Lier des collaborateurs au projet si des collaborateurs sont sélectionnés
-    if ($request->has('collaborateurs')) {
-        $projet->collaborateurs()->attach($request->input('collaborateurs'));
-    }
-
-    return redirect('/');
-}
 
     public function details($id)
     {
@@ -141,6 +144,7 @@ public function addCollaborator($projetId, $collaboratorId)
     public function destroy($id)
     {
         $projet = Projet::findOrFail($id);
+        $projet->collaborateurs()->detach();
         $projet->delete();
         return redirect()->route('accueil')->with('success', 'Le projet a été supprimé avec succès.');
     }

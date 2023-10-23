@@ -1,71 +1,253 @@
 @extends('layouts.app')
 @include('navbar', ['appName' => 'Florentin Toupet'])
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+<div class="login-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    {{-- <div class="card-header">{{ __('Login') }}</div> --}}
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="form-content">
+                                <img class="imgIns" src="https://media.discordapp.net/attachments/1080262834484682772/1162987134437822585/ft_1_blanc.png?ex=654729ac&is=6534b4ac&hm=449665e1808f3ff3c1cfdb41ee5a0802ac2c9ed5fe95c0cfdfff7cd5f805e8c8&=&width=338&height=250">
+                                <header class="headerForm">Se connecter</header>
+                                <div class="field input-field">
+                                    <input type="email" placeholder="Adresse courriel" class="input @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    <span class="invalid-feedback cache">
+                                        <strong>These credentials do not match our records.</strong>
                                     </span>
-                                @enderror
-                            </div>
-                        </div>
+                                </div>
+                                
+                                <div class="field input-field">
+                                    <input type="password" placeholder="Mot de passe" class="password @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="current-password">
+                                    <i class='bx bx-hide eye-icon'></i>
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                <div class="form-link">
+                                    <a href="{{ route('password.request') }}" class="forgot-pass">Mot de passe oublié</a>
+                                </div>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                <div class="field button-field">
+                                    <button type="submit">{{ __('Se connecter') }}</button>
                                 </div>
                             </div>
+                        </form>
+                        <div class="line"></div>
+                        <div class="form-link">
+                            <span>Vous n'avez pas de compte ? <a href="/register" class="link signup-link">S'inscrire</a></span>
                         </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+<style>
+    .imgIns{
+        width: 90px;
+        padding-left:10px
+    }
+    .cache{
+        color:transparent;
+        user-select: none
+    }
+    .input.is-invalid {
+        border: 2px solid red;
+    }
+
+    .password.is-invalid {
+        border: 2px solid red;
+    }
+
+    .login-form {
+        font-family: 'Arial', sans-serif;
+        color: #fff;
+        text-align: center;
+    }
+
+    .container {
+        height: 100vh;
+        display: flex;
+        /* align-items: center; */
+        padding-top: 100px;
+        justify-content: center;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px; /* Coins arrondis pour le formulaire */
+        box-shadow: 0 10px 10px -3px rgba(255, 255, 255, 0.8);
+    }
+
+    .card-header {
+        background-color: #1c1f24;
+        color: #fff;
+        border: none;
+        border-top-left-radius: 10px; /* Coins arrondis seulement en haut */
+        border-top-right-radius: 10px; /* Coins arrondis seulement en haut */
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-content {
+        padding: 20px;
+    }
+
+    .headerForm {
+        font-size: 36px; /* Augmentation de la taille du texte "LOGIN" */
+        font-weight: 600;
+        color: #fff;
+        text-align: left; /* Alignement du texte à gauche */
+        margin-top: 0; /* Supprime la marge supérieure pour le texte "LOGIN" */
+        padding: 0 20px; /* Ajoute de l'espace à gauche et à droite */
+    }
+
+    .input-field {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    .input, .password{
+        width: 100%;
+        height: 40px;
+        background: #3d424f;
+        color: #fff;
+        border: none;
+        border-radius: 10px; /* Coins arrondis pour les champs */
+        padding: 10px;
+    }
+
+    .input:focus, .password-focus {
+        border: 2px solid #0171d3;
+    }
+
+    .password {
+        width: 100%; /* Les champs d'e-mail et de mot de passe ont maintenant la même largeur */
+    }
+
+    .eye-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: #ff0000;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .button-field {
+        margin-top: 20px;
+    }
+
+    button {
+        width: 100%;
+        height: 40px;
+        background-color: #0171d3;
+        border: none;
+        border-radius: 10px; /* Coins arrondis pour le bouton */
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #016dcb;
+    }
+
+    .form-link {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .form-link a {
+        color: #0171d3;
+        text-decoration: none;
+    }
+
+    .form-content a:hover {
+        text-decoration: underline;
+    }
+
+    .line {
+        position: relative;
+        height: 1px;
+        width: 100%;
+        margin: 36px 0;
+        background-color: #3d424f;
+    }
+
+    .line::before {
+        content: 'Or';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #32363d;
+        color: #8b8b8b;
+        padding: 0 15px;
+    }
+
+    /* Style pour le lien "Forgot password?" */
+    .forgot-pass {
+        color: #0171d3;
+        text-decoration: none;
+    }
+
+    .forgot-pass:hover {
+        text-decoration: underline;
+    }
+
+    /* Style pour le lien "Signup" */
+    .signup-link {
+        color: #0171d3;
+        text-decoration: none;
+    }
+
+    .signup-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+
+<script>
+    const pwShowHide = document.querySelectorAll(".eye-icon");
+
+    pwShowHide.forEach(eyeIcon => {
+        eyeIcon.addEventListener("click", () => {
+            let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
+
+            pwFields.forEach(password => {
+                if (password.type === "password") {
+                    password.type = "text";
+                    eyeIcon.classList.remove("bx-hide");
+                    eyeIcon.classList.add("bx-show");
+                } else {
+                    password.type = "password";
+                    eyeIcon.classList.remove("bx-show");
+                    eyeIcon.classList.add("bx-hide");
+                }
+            });
+        });
+    });
+</script>
+
+<script src="https://unpkg.com/boxicons@2.0.7/"></script>
 @endsection

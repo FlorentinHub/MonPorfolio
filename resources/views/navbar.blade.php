@@ -8,7 +8,7 @@
         </a>
         <div class="logo">{{ $appName }}</div>
         <ul class="nav-links">
-            <li><a href="{{ route('accueil') }}">Accueil</a></li>
+            <li><a href="/">Accueil</a></li>
             <li><a href="#">Projets</a></li>
             <li><a href="#">À Propos</a></li>
             @guest
@@ -20,7 +20,7 @@
                         Déconnecter</a>
                 </li>
 
-                @if (!auth()->user()->isAdmin)
+                @if (auth()->user()->isAdmin)
                     <li class="dropdown">
                         <a href="#" class="dropbtn">Admin</a>
                         <div class="dropdown-content">

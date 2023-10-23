@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Projet extends Model
 {
@@ -16,6 +17,10 @@ class Projet extends Model
         'pourcentage_complet',
         'lien_github',
         'description',
-        'image',
+        'image_projet',
     ];
+    public function collaborateurs(): BelongsToMany
+    {
+        return $this->belongsToMany(Collaborateur::class);
+    }
 }

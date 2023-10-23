@@ -10,10 +10,35 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700,800'
         rel='stylesheet' type='text/css'>
     <title> Florentin Toupet</title>
+
+    <script>
+        async function getGitHubAvatar(username) {
+            try {
+                console.log($ {
+                    username
+                });
+                console.log("test");
+                const response = await fetch(`https://api.github.com/users/${username}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.avatar_url) {
+                        return data.avatar_url;
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur lors de la récupération de l\'avatar GitHub :', error);
+            }
+            return 'URL_de_votre_image_par_defaut.jpg';
+        }
+    </script>
+
+
 </head>
 @include('navbar', ['appName' => 'Florentin Toupet'])
 
 <body>
+    @foreach ($projets as $projet)
+    @endforeach
     @extends('layout')
     @section('content')
         <section class="hero">
@@ -28,8 +53,10 @@
                 @foreach ($projets as $projet)
                     <div class="col-md-6">
                         <div class="portfoliocard">
-                            <div class="coverphoto"></div>
-                            <div class="profile_picture"></div>
+                            <div class="coverphoto">
+                                <img class="coverphoto" src="{{ asset('storage/' . $projet->image_projet) }}"
+                                    alt="{{ $projet->nom_projet }}">
+                            </div>
                             <div class="left_col">
                                 <div class="followers">
                                     <div class="follow_count">{{ $projet->complexite }}</div>
@@ -38,12 +65,12 @@
                                 <div class="following">
                                     <div class="follow_count">{{ $projet->pourcentage_complet }}</div>
                                     Note finale
-                                </div>
+                                </div><br>
                                 <div class="following">
                                     <div class="follow_count"></div>
-                                    <a href="{{ route('projet.details', $projet->id) }}" class="btn">Détails</a>
+                                    <a href="{{ route('projet.details', $projet->id) }}" class="btn">Détails</a><br>
                                     @if (auth()->check() && auth()->user()->isAdmin)
-                                        <a href="{{ route('projet.edit', $projet->id) }}" class="btn">Modifier</a>
+                                        <a href="{{ route('projet.edit', $projet->id) }}" class="btn">Modifier</a><br>
                                         <a href="{{ route('projet.confirmDelete', $projet->id) }}"
                                             class="btn btn-danger">Supprimer</a>
                                     @endif
@@ -149,7 +176,7 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .btn:hover {
@@ -157,11 +184,14 @@
         }
 
         .projets {
+            user-select: none;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            /* Deux colonnes avec une largeur égale */
+            grid-template-columns: repeat(3, 1fr);
+            /* Trois colonnes avec une largeur égale */
             gap: 20px;
             /* Espace entre les cartes */
+            justify-content: center;
+            /* Centre les colonnes horizontalement */
             padding: 80px 0;
         }
 
@@ -169,7 +199,6 @@
             max-width: 100%;
         }
 
-        /* Style du pied de page */
         footer {
             background-color: #111;
             text-align: center;
@@ -178,7 +207,7 @@
 
         footer p {
             font-size: 20px;
-            font-size: bold;
+            font-weight: bold;
         }
 
         a.nostyle {
@@ -189,10 +218,8 @@
         }
 
         div.portfoliocard {
-            position: relative;
-            height: 450px;
-            width: 400px;
-            background: rgba(255, 255, 255, 1);
+            background: rgba(40, 40, 40, 1);
+            /* Fond sombre */
             border: 1px solid rgba(0, 0, 0, 0.7);
             box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1),
                 0px 2px 6px rgba(0, 0, 0, 0.5);
@@ -204,8 +231,7 @@
 
         div.portfoliocard div.coverphoto {
             width: 100%;
-            height: 120px;
-            background: url('http://farm8.staticflickr.com/7149/6484148411_baf8d2e934_z.jpg');
+            height: 220px;
             background-position: center center;
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
@@ -214,6 +240,12 @@
                 1px 0px 2px rgba(255, 255, 255, 0.7);
             z-index: 99;
         }
+        div.portfoliocard div.coverphoto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
 
         div.portfoliocard div.left_col,
         div.portfoliocard div.right_col {
@@ -229,9 +261,8 @@
 
         div.portfoliocard div.right_col {
             width: 60%;
-            background: rgba(245, 245, 245, 1);
+            background: rgba(40, 40, 40, 1);
             border-left: 1px solid rgba(230, 230, 230, 1);
-            box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.7);
             margin-left: -1px;
             border-bottom-right-radius: 5px;
         }
@@ -244,7 +275,6 @@
             top: 65px;
             left: 40px;
             border-radius: 100%;
-            background-image: url('http://cache.spreadshirt.net/Public/Common/images/profile-pic-placeholder_130x130.png');
             background-size: 100% 100%;
             padding: 7px;
             border: 4px solid rgba(255, 255, 255, 1)
@@ -253,7 +283,8 @@
         div.portfoliocard div.right_col h2.name {
             font-size: 30px;
             font-weight: 300;
-            color: rgba(30, 30, 30, 1);
+            font-weight: bold;
+            color: rgb(255, 255, 255);
             padding: 0;
             margin: 20px 10px 0px 30px;
         }
@@ -332,16 +363,18 @@
 
         div.portfoliocard div.followers,
         div.portfoliocard div.following {
-            margin: 10px 0px 0px 35px;
+            margin: 10px 0px 0px 25px;
             font-weight: 300;
             font-size: 16px;
-            color: rgba(30, 30, 30, 1);
+            font-weight: bold;
+            color: rgb(255, 255, 255);
         }
 
         div.portfoliocard div.follow_count {
             font-weight: 400;
             font-size: 25px;
-            color: rgba(140, 140, 140, 1);
+            font-weight: bold;
+            color: rgb(205, 205, 205);
         }
     </style>
 
@@ -350,7 +383,6 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
         @if (session('error'))
             Swal.fire({
@@ -382,6 +414,7 @@
             color: #fff;
             font-size: 18px;
         }
+
         .swal2-actions {
             text-align: center;
         }
