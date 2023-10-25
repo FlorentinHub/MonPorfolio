@@ -9,7 +9,7 @@
         <div class="logo">{{ $appName }}</div>
         <ul class="nav-links">
             <li><a href="/">Accueil</a></li>
-            <li><a href="#">Projets</a></li>
+            <li><a href="#">Mes Projets</a></li>
             <li><a href="#">À Propos</a></li>
             @guest
                 <li><a href="{{ route('login') }}">Se Connecter</a></li>

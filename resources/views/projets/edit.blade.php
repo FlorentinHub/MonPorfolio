@@ -52,7 +52,6 @@
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description">{{ $projet->description }}</textarea>
         </div>
-
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
     </form>
 @endsection
