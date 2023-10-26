@@ -48,7 +48,6 @@
                                         <input id="password" type="password"
                                             class="input form-control @error('password') is-invalid @enderror"
                                             name="password" required autocomplete="new-password" placeholder="Mot de passe">
-                                        <!-- Ajoutez le placeholder ici -->
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -59,7 +58,7 @@
                                     <div class="field input-field">
                                         <input id="password-confirm" type="password" class="input form-control"
                                             name="password_confirmation" required autocomplete="new-password"
-                                            placeholder="Confirmer le mot de passe"> <!-- Ajoutez le placeholder ici -->
+                                            placeholder="Confirmer le mot de passe">
                                     </div>
 
                                     <div class="field button-field">

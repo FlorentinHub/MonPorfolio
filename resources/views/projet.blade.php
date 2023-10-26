@@ -1,38 +1,104 @@
 @include('navbar', ['appName' => 'Florentin Toupet'])
 @extends('layout')
 @section('content')
-    <div class="projet-details">
+    <div class="project-details">
         <h2>{{ $projet->nom_projet }}</h2>
-        <p>Type de Projet: {{ $projet->type_projet }}</p>
-        <p>Complexité: {{ $projet->complexite }}</p>
-        <p>Pourcentage Complet: {{ $projet->pourcentage_complet }}%</p>
-        <p>Lien GitHub: <a href="{{ $projet->lien_github }}">{{ $projet->lien_github }}</a></p>
-        <p>Description: {{ $projet->description }}</p>
-        <ul class="collaborateurs">
-                <li>
-                    dd({{$projet}});
-                    @if ($projet->collaborateur)
-                        <img src="{{ asset('URL_de_votre_image_par_defaut.jpg') }}"
-                            alt="{{ $projet->collaborateur->nom_collaborateur }}" width="40" height="40">
-                        <a href="{{ $projet->collaborateur->compte_github }}"
-                            class="nostyle">{{ $projet->collaborateur->nom_collaborateur }}</a>
-                    @else
-                        <img src="{{ asset('URL_de_votre_image_par_defaut.jpg') }}" alt="Collaborateur inconnu"
-                            width="40" height="40">
-                        <span class="nostyle">Collaborateur inconnu</span>
-                    @endif
-                </li>
-
-                <script>
-                    @if ($projet->collaborateur)
-                        getGitHubAvatar("{{ $projet->collaborateur->getUsernameFromGitHubLink() }}").then(avatarUrl => {
-                            const img = document.querySelector(`img[alt="{{ $projet->collaborateur->nom_collaborateur }}"]`);
-                            if (img) {
-                                img.src = avatarUrl;
-                            }
-                        });
-                    @endif
-                </script>
-        </ul>
+        <form>
+            <fieldset>
+                <legend>Informations sur le Projet</legend>
+                <div class="form-group">
+                    <label for="typeProjet">Type de Projet</label>
+                    <input type="text" id="typeProjet" value="{{ $projet->type_projet }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="complexite">Complexité</label>
+                    <input type="text" id="complexite" value="{{ $projet->complexite }}%" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="pourcentageComplet">Pourcentage Complet</label>
+                    <input type="text" id="pourcentageComplet" value="{{ $projet->pourcentage_complet }}%" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="lienGithub">Lien GitHub</label>
+                    <a href="{{ $projet->lien_github }}" target="_blank">{{ $projet->lien_github }}</a>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" readonly>{{ $projet->description }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageProjet">Image du Projet</label>
+                    <img src="{{ asset('storage/' . $projet->image_projet) }}" alt="{{ $projet->nom_projet }}" width="300">
+                </div>
+            </fieldset>
+        </form>
     </div>
 @endsection
+<style>
+    .project-details {
+    background-color: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    color:black;
+}
+.form-group img {
+    max-width: 100%; /* Pour assurer que l'image reste dans la largeur du conteneur */
+    height: auto; /* Pour conserver le rapport hauteur/largeur de l'image */
+    display: block; /* Pour centrer l'image dans le conteneur */
+    margin-top: 10px; /* Espacement par rapport aux autres éléments */
+    border: 1px solid #ddd; /* Ajouter une bordure légère à l'image */
+    border-radius: 5px; /* Coins arrondis pour l'image */
+}
+form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+legend {
+    font-weight: bold;
+    color:black;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color:black;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+textarea {
+    height: 100px;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+input[type="text"][readonly],
+textarea[readonly] {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}
+
+    </style>

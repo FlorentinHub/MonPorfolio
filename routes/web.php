@@ -9,6 +9,19 @@ use App\Http\Controllers\AccueilController;
 
 Route::get('/', [AccueilController::class, 'index'])->name('accueil');
 
+// La route pour la page de renvoi du courriel de confirmation
+Route::get('/verification', function () {
+    return view('auth.emails.confirmation');
+})->name('verification.notice')->middleware('auth');
+
+// Seuls les utilisateurs vérifiés peuvent accéder aux routes suivantes
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
+    Route::get('/', [AccueilController::class, 'index'])->name('accueil');
+});
+
+
+
 Route::get('/ajouter-projet', [ProjetController::class, 'index']);
 Route::get('/ajouter-projet', [ProjetController::class, 'create']);
 // Route::get('/ajouter-projet', function(){
@@ -18,9 +31,8 @@ Route::get('/ajouter-projet', [ProjetController::class, 'create']);
 Route::post('/projet', [ProjetController::class, 'store']);
 
 
-Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
 
-
+Auth::routes(['verify' => true]);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -45,6 +57,7 @@ Route::group(['middleware' => ['auth']], function() {
             /**
              * Dashboard Routes
              */
-            Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
+            
+            Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
     });
 });
