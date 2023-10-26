@@ -6,27 +6,26 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    {{-- <div class="card-header">{{ __('Login') }}</div> --}}
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-content">
                                 <img class="imgIns" src="https://media.discordapp.net/attachments/1080262834484682772/1162987134437822585/ft_1_blanc.png?ex=654729ac&is=6534b4ac&hm=449665e1808f3ff3c1cfdb41ee5a0802ac2c9ed5fe95c0cfdfff7cd5f805e8c8&=&width=338&height=250">
-                                <header class="headerForm">Se connecter</header>
+                                <header class="headerForm">{{ __('auth.login') }}</header>
                                 <div class="field input-field">
-                                    <input type="email" placeholder="Adresse courriel" class="input @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <input type="email" placeholder="{{ __('auth.email') }}" class="input @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                     <span class="invalid-feedback cache">
-                                        <strong>These credentials do not match our records.</strong>
+                                        <strong>{{ __('auth.failed') }}</strong>
                                     </span>
                                 </div>
                                 
                                 <div class="field input-field">
-                                    <input type="password" placeholder="Mot de passe" class="password @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="current-password">
+                                    <input type="password" placeholder="{{ __('auth.password') }}" class="password @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="current-password">
                                     <i class='bx bx-hide eye-icon'></i>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -34,20 +33,19 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
 
                                 <div class="form-link">
-                                    <a href="{{ route('password.request') }}" class="forgot-pass">Mot de passe oublié</a>
+                                    <a href="{{ route('password.request') }}" class="forgot-pass">{{ __('auth.forgot_password') }}</a>
                                 </div>
 
                                 <div class="field button-field">
-                                    <button type="submit">{{ __('Se connecter') }}</button>
+                                    <button type="submit">{{ __('auth.login') }}</button>
                                 </div>
                             </div>
                         </form>
                         <div class="line"></div>
                         <div class="form-link">
-                            <span>Vous n'avez pas de compte ? <a href="/register" class="link signup-link">S'inscrire</a></span>
+                            <span>{{ __("Vous n'avez pas de compte ?") }} <a href="{{ route('register') }}" class="link signup-link">{{ __('auth.no_account') }}</a></span>
                         </div>
                     </div>
                 </div>
@@ -82,23 +80,14 @@
     .container {
         height: 100vh;
         display: flex;
-        /* align-items: center; */
         padding-top: 100px;
         justify-content: center;
     }
 
     .card {
         border: none;
-        border-radius: 10px; /* Coins arrondis pour le formulaire */
+        border-radius: 10px;
         box-shadow: 0 10px 10px -3px rgba(255, 255, 255, 0.8);
-    }
-
-    .card-header {
-        background-color: #1c1f24;
-        color: #fff;
-        border: none;
-        border-top-left-radius: 10px; /* Coins arrondis seulement en haut */
-        border-top-right-radius: 10px; /* Coins arrondis seulement en haut */
     }
 
     .card-body {
@@ -110,12 +99,12 @@
     }
 
     .headerForm {
-        font-size: 36px; /* Augmentation de la taille du texte "LOGIN" */
+        font-size: 36px;
         font-weight: 600;
         color: #fff;
-        text-align: left; /* Alignement du texte à gauche */
-        margin-top: 0; /* Supprime la marge supérieure pour le texte "LOGIN" */
-        padding: 0 20px; /* Ajoute de l'espace à gauche et à droite */
+        text-align: left;
+        margin-top: 0;
+        padding: 0 20px;
     }
 
     .input-field {
@@ -129,7 +118,7 @@
         background: #3d424f;
         color: #fff;
         border: none;
-        border-radius: 10px; /* Coins arrondis pour les champs */
+        border-radius: 10px;
         padding: 10px;
     }
 
@@ -138,7 +127,7 @@
     }
 
     .password {
-        width: 100%; /* Les champs d'e-mail et de mot de passe ont maintenant la même largeur */
+        width: 100%;
     }
 
     .eye-icon {
@@ -161,7 +150,7 @@
         height: 40px;
         background-color: #0171d3;
         border: none;
-        border-radius: 10px; /* Coins arrondis pour le bouton */
+        border-radius: 10px;
         color: #fff;
         font-size: 16px;
         cursor: pointer;
@@ -182,7 +171,7 @@
         text-decoration: none;
     }
 
-    .form-content a:hover {
+    .form-link a:hover {
         text-decoration: underline;
     }
 
@@ -195,7 +184,7 @@
     }
 
     .line::before {
-        content: 'Or';
+        content: 'Ou';
         position: absolute;
         top: 50%;
         left: 50%;
@@ -205,7 +194,6 @@
         padding: 0 15px;
     }
 
-    /* Style pour le lien "Forgot password?" */
     .forgot-pass {
         color: #0171d3;
         text-decoration: none;
@@ -215,7 +203,6 @@
         text-decoration: underline;
     }
 
-    /* Style pour le lien "Signup" */
     .signup-link {
         color: #0171d3;
         text-decoration: none;
@@ -225,7 +212,6 @@
         text-decoration: underline;
     }
 </style>
-
 
 <script>
     const pwShowHide = document.querySelectorAll(".eye-icon");

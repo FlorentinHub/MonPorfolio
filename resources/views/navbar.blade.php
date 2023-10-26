@@ -11,6 +11,60 @@
             <li><a href="/">Accueil</a></li>
             <li><a href="#">Mes Projets</a></li>
             <li><a href="#">À Propos</a></li>
+            @php $locale = session()->get('locale'); @endphp
+            <li class="dropdown">
+                <a class="dropbtn" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" v-pre>
+                        @switch($locale)
+                            @case('en')
+                                <img src="{{ asset('https://media.discordapp.net/attachments/470953701985615897/1167110218182823956/1200px-Flag_of_the_United_Kingdom_281-229.png?ex=654cef17&is=653a7a17&hm=2b158fafe311d91b094aba0bd7185363c59160d9716c1f72583c57d08b47707e&=&width=1207&height=603') }}"
+                                    width="25px">
+                            @break
+
+                            @case('fr')
+                                <img src="{{ asset('https://media.discordapp.net/attachments/470953701985615897/1167110319395586048/flag-world-france.png?ex=654cef30&is=653a7a30&hm=302fe021e8a5f97edcfe80b19e9bcd0046584f77d3af9c6405229c6a4c766a0c&=&width=625&height=416') }}"
+                                    width="25px">
+                            @break
+                            @case('es')
+                                <img src="{{ asset('https://media.discordapp.net/attachments/470953701985615897/1167110400383406090/Bandera_de_EspaC3B1a.png?ex=654cef43&is=653a7a43&hm=13c80d0924d744637d6dacd5f4bd9dc35f656dafb279804f43caec8d43d5d887&=&width=906&height=603') }}"
+                                    width="25px">
+                            @break
+
+                            @default
+                                <img src="{{ asset('images/flag/en.png') }}" width="25px"> English
+                        @endswitch
+                    <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('lang.switch', ['locale' => 'en']) }}">
+                        <img src="{{ asset('https://media.discordapp.net/attachments/470953701985615897/1167110218182823956/1200px-Flag_of_the_United_Kingdom_281-229.png?ex=654cef17&is=653a7a17&hm=2b158fafe311d91b094aba0bd7185363c59160d9716c1f72583c57d08b47707e&=&width=1207&height=603') }}"
+                            width="25px">
+                    </a>
+                    <a class="dropdown-item" href="{{ route('lang.switch', ['locale' => 'fr']) }}">
+                        <img src="{{ asset('https://media.discordapp.net/attachments/470953701985615897/1167110319395586048/flag-world-france.png?ex=654cef30&is=653a7a30&hm=302fe021e8a5f97edcfe80b19e9bcd0046584f77d3af9c6405229c6a4c766a0c&=&width=625&height=416') }}"
+                            width="25px"> 
+                    </a>
+                    <a class="dropdown-item" href="{{ route('lang.switch', ['locale' => 'es']) }}">
+                        <img src="{{ asset('https://media.discordapp.net/attachments/470953701985615897/1167110400383406090/Bandera_de_EspaC3B1a.png?ex=654cef43&is=653a7a43&hm=13c80d0924d744637d6dacd5f4bd9dc35f656dafb279804f43caec8d43d5d887&=&width=906&height=603') }}"
+                            width="25px"> 
+                    </a>
+                </div>
+            </li>
+
+            {{-- 
+
+            <li class="dropdown">
+                <a href="#" class="dropbtn" id="languageBtn">{{ app()->getLocale() }}</a>
+                <div class="dropdown-content">
+                    <a class="dropdown-item" href="{{ route('lang.switch', ['locale' => 'fr']) }}">
+                        <img src="{{ asset('images/flag/fr.png') }}" width="25px"> Français
+                    </a>
+
+                    <a class="dropdown-item" href="{{ route('lang', 'fr') }}">FR</a>
+                    <a class="dropdown-item" href="{{ route('lang', 'en') }}">EN</a>
+                    <a class="dropdown-item" href="{{ route('lang', 'es') }}">ES</a>
+                </div>
+            </li> --}}
             @guest
                 <li><a href="{{ route('login') }}">Se Connecter</a></li>
                 <li><a href="{{ route('register') }}">S'Inscrire</a></li>
@@ -29,7 +83,6 @@
                         </div>
                     </li>
                 @endif
-
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
@@ -38,39 +91,50 @@
     </nav>
 </header>
 
-
 <style>
+    /* Style du menu déroulant des langues */
     .dropdown {
         position: relative;
         display: inline-block;
+        margin-right: 10px;
     }
 
     .dropbtn {
-        color: #fff;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
+        font-size: 20px;
         background-color: transparent;
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dropbtn:hover {
+        background-color: white;
+        color: #000;
     }
 
     .dropdown-content {
         display: none;
         position: absolute;
         background-color: #111;
-        min-width: 160px;
+        min-width: 40px;
+        max-width: 50px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
     }
 
     .dropdown-content a {
         color: #fff;
-        padding: 12px 16px;
         text-decoration: none;
+        padding: 12px 16px;
         display: block;
     }
 
     .dropdown-content a:hover {
-        background-color: #007BFF;
+        background-color: white;
+        color: black;
     }
 
     .dropdown:hover .dropdown-content {

@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjetController;
 use App\Http\Controllers\CollaborateurController;
 use App\Http\Controllers\AccueilController;
+use App\Http\Controllers\LocalizationController;
+
+Route::get('lang/switch/{locale}', [LocalizationController::class, 'index'])->name('lang.switch');
+Route::get('lang/{locale}', [LocalizationController::class, 'index'])->name('lang');
 
 
 Route::get('/', [AccueilController::class, 'index'])->name('accueil');
