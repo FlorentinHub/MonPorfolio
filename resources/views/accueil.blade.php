@@ -302,9 +302,7 @@
             color: rgb(205, 205, 205);
         }
     </style>
-
     </html>
-
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

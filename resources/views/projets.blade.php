@@ -18,45 +18,53 @@
     }
 </script>
 <section class="projets" id="projets">
-    <div class="row">
-        @foreach ($projets as $projet)
-            <div class="col-md-6">
-                <div class="portfoliocard">
-                    <div class="coverphoto">
-                        <img class="coverphoto" src="{{ asset('storage/' . $projet->image_projet) }}"
-                            alt="{{ $projet->nom_projet }}">
+    @php $counter = 0; @endphp
+    @foreach ($projets as $projet)
+        @if ($counter % 3 == 0)
+            <div class="row">
+        @endif
+        <div class="col-md-4">
+            <div class="portfoliocard">
+                <div class="coverphoto">
+                    <img class="coverphoto" src="{{ asset('storage/' . $projet->image_projet) }}"
+                        alt="{{ $projet->nom_projet }}">
+                </div>
+                <div class="left_col">
+                    <div class="followers">
+                        <div class="follow_count">{{ $projet->complexite }}</div>
+                        {{ __('auth.complexity') }}
                     </div>
-                    <div class="left_col">
-                        <div class="followers">
-                            <div class="follow_count">{{ $projet->complexite }}</div>
-                            {{ __('auth.complexity') }}
-                        </div>
-                        <div class="following">
-                            <div class="follow_count">{{ $projet->pourcentage_complet }}</div>
-                            {{ __('auth.final_grade') }}
-                        </div><br>
-                        <div class="following">
-                            <div class="follow_count"></div>
-                            <a href="{{ route('projet.details', $projet->id) }}"
-                                class="btn">{{ __('auth.details') }}</a><br>
-                            @if (auth()->check() && auth()->user()->isAdmin)
-                                <a href="{{ route('projet.edit', $projet->id) }}"
-                                    class="btn">{{ __('auth.edit') }}</a><br>
-                                <a href="{{ route('projet.confirmDelete', $projet->id) }}"
-                                    class="btn btn-danger">{{ __('auth.delete') }}</a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="right_col">
-                        <h2 class="name">{{ $projet->nom_projet }}</h2>
-                        <h3 class="location">{{ $projet->type_projet }}</h3>
-                        <div style="margin-left: 15px" class="name">{{ __('auth.description')}}</div>
-                        <h3 class="location">{{ $projet->description }}</h3>
+                    <div class="following">
+                        <div class="follow_count">{{ $projet->pourcentage_complet }}</div>
+                        {{ __('auth.final_grade') }}
+                    </div><br>
+                    <div class="following">
+                        <div class="follow_count"></div>
+                        <a href="{{ route('projet.details', $projet->id) }}"
+                            class="btn">{{ __('auth.details') }}</a><br>
+                        @if (auth()->check() && auth()->user()->isAdmin)
+                            <a href="{{ route('projet.edit', $projet->id) }}"
+                                class="btn">{{ __('auth.edit') }}</a><br>
+                            <a href="{{ route('projet.confirmDelete', $projet->id) }}"
+                                class="btn btn-danger">{{ __('auth.delete') }}</a>
+                        @endif
                     </div>
                 </div>
+                <div class="right_col">
+                    <h2 class="name">{{ $projet->nom_projet }}</h2>
+                    <h3 class="location">{{ $projet->type_projet }}</h3>
+                    <div style="margin-left: 15px" class="name">{{ __('auth.description') }}</div>
+                    <br>
+                    <h3 class="location">{{ $projet->description }}</h3>
+                </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+        </div>
+        @if ($counter % 3 == 2 || $loop->last)
+            </div>
+        @endif
+        @php $counter++; @endphp
+    @endforeach
 </section>
 <style>
     body,

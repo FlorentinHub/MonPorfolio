@@ -12,7 +12,7 @@
         <ul class="nav-links">
             <li><a href="/">{{ __('auth.home') }}</a></li>
             <li><a href="/projects">{{ __('auth.my_projects') }}</a></li>
-            <li><a href="#">{{ __('auth.about') }}</a></li>
+            <li><a href="/about">{{ __('auth.about') }}</a></li>
             @php $locale = session()->get('locale'); @endphp
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"

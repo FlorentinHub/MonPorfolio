@@ -34,6 +34,9 @@ Route::get('/projects', [AccueilController::class, 'showProjects']);
 
 Auth::routes(['verify' => true]);
 Auth::routes();
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -51,9 +54,9 @@ Route::post('/ajouter-collaborateur', [CollaborateurController::class, 'store'])
 
 
 //only authenticated can access this group
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     //only verified account can access with this group
-    Route::group(['middleware' => ['verified']], function() {
-            Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
+    Route::group(['middleware' => ['verified']], function () {
+        Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
     });
 });
