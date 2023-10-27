@@ -36,4 +36,7 @@ return [
     'project_description' => 'Description',
     'project_image' => 'Image du Projet',
     'deconnect' => 'Se déconnecter',
+    'NomComplet'=>'Nom complet',
+    'cpassword' => 'Confirmez votre mot de passe',
+    'Vcompte'=>'Vous avez deja un compte ?',
 ];

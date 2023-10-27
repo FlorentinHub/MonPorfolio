@@ -1,88 +1,88 @@
 @extends('layouts.app')
 @include('navbar', ['appName' => 'Florentin Toupet'])
 @section('content')
-    <div class="login-form">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
-                                <div class="form-content">
-                                    <img class="imgIns" src="https://media.discordapp.net/attachments/1080262834484682772/1162987134437822585/ft_1_blanc.png?ex=654729ac&is=6534b4ac&hm=449665e1808f3ff3c1cfdb41ee5a0802ac2c9ed5fe95c0cfdfff7cd5f805e8c8&=&width=338&height=250">
-                                       
-                                    <header class="headerForm">S'inscrire</header>
+<div class="login-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+                            <div class="form-content">
+                                <img class="imgIns"
+                                    src="https://media.discordapp.net/attachments/1080262834484682772/1162987134437822585/ft_1_blanc.png?ex=654729ac&is=6534b4ac&hm=449665e1808f3ff3c1cfdb41ee5a0802ac2c9ed5fe95c0cfdfff7cd5f805e8c8&=&width=338&height=250">
+
+                                <header class="headerForm">S'inscrire</header>
+                                <span class="invalid-feedback cache">
+                                    <strong>These credentials do not match our records.</strong>
+                                </span>
+                                <div class="field input-field">
                                     <span class="invalid-feedback cache">
                                         <strong>These credentials do not match our records.</strong>
                                     </span>
-                                    <div class="field input-field">
-                                        <span class="invalid-feedback cache">
-                                            <strong>These credentials do not match our records.</strong>
+                                    <input id="name" type="text"
+                                        class="input form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus
+                                        placeholder="{{ __('auth.NomComplet') }}">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
                                         </span>
-                                        <input id="name" type="text"
-                                            class="input form-control @error('name') is-invalid @enderror" name="name"
-                                            value="{{ old('name') }}" required autocomplete="name" autofocus
-                                            placeholder="Nom Complet">
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                        
-                                    </div>
+                                    @enderror
 
-                                    <div class="field input-field">
-                                        <input id="email" type="email"
-                                            class="input form-control @error('email') is-invalid @enderror" name="email"
-                                            value="{{ old('email') }}" required autocomplete="email"
-                                            placeholder="Adresse courriel">
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="field input-field">
-                                        <input id="password" type="password"
-                                            class="input form-control @error('password') is-invalid @enderror"
-                                            name="password" required autocomplete="new-password" placeholder="Mot de passe">
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="field input-field">
-                                        <input id="password-confirm" type="password" class="input form-control"
-                                            name="password_confirmation" required autocomplete="new-password"
-                                            placeholder="Confirmer le mot de passe">
-                                    </div>
-
-                                    <div class="field button-field">
-                                        <button type="submit">{{ __('S\'inscrire') }}</button>
-                                    </div>
-                                    <div class="line"></div>
-                                    <div class="form-link">
-                                        <span> Vous avez déjà un compte ? <a href="/login"
-                                                class="link signup-link">Se connecter</a></span>
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+
+                                <div class="field input-field">
+                                    <input id="email" type="email"
+                                        class="input form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ old('email') }}" required autocomplete="email"
+                                        placeholder="{{ __('auth.email') }}">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="field input-field">
+                                    <input id="password" type="password"
+                                        class="input form-control @error('password') is-invalid @enderror"
+                                        name="password" required autocomplete="new-password" placeholder="{{ __('auth.password') }}">
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="field input-field">
+                                    <input id="password-confirm" type="password" class="input form-control"
+                                        name="password_confirmation" required autocomplete="new-password"
+                                        placeholder="{{ __('auth.cpassword') }}">
+                                </div>
+                                <div class="field button-field">
+                                    <button type="submit">{{ __('auth.register') }}</button>
+                                </div>
+                                <div class="line"></div>
+                                <div class="form-link">
+                                    <span>{{ __('auth.Vcompte') }}<a href="/login" class="link signup-link">{{ __('auth.login') }}</a></span>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
     </div>
     <style>
-        .imgIns{
+        .imgIns {
             width: 90px;
-            padding-left:10px
+            padding-left: 10px
         }
+
         .cache {
             color: transparent;
             user-select: none;
@@ -107,7 +107,6 @@
         .container {
             height: 100vh;
             display: flex;
-            /* align-items: center; */
             padding-top: 100px;
             justify-content: center;
         }
@@ -115,8 +114,7 @@
         .card {
             border: none;
             border-radius: 10px;
-            /* Coins arrondis pour le formulaire */
-            box-shadow: 0 10px 10px -3px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 20px -3px #016DCC;
         }
 
         .card-header {
@@ -124,9 +122,7 @@
             color: #fff;
             border: none;
             border-top-left-radius: 10px;
-            /* Coins arrondis seulement en haut */
             border-top-right-radius: 10px;
-            /* Coins arrondis seulement en haut */
         }
 
         .card-body {
@@ -160,7 +156,6 @@
             color: #fff;
             border: none;
             border-radius: 10px;
-            /* Coins arrondis pour les champs */
             padding: 10px;
         }
 
@@ -171,7 +166,6 @@
 
         .password {
             width: 100%;
-            /* Les champs d'e-mail et de mot de passe ont maintenant la même largeur */
         }
 
         .eye-icon {
@@ -195,7 +189,6 @@
             background-color: #0171d3;
             border: none;
             border-radius: 10px;
-            /* Coins arrondis pour le bouton */
             color: #fff;
             font-size: 16px;
             cursor: pointer;
@@ -239,7 +232,6 @@
             padding: 0 15px;
         }
 
-        /* Style pour le lien "Forgot password?" */
         .forgot-pass {
             color: #0171d3;
             text-decoration: none;
@@ -249,7 +241,6 @@
             text-decoration: underline;
         }
 
-        /* Style pour le lien "Signup" */
         .signup-link {
             color: #0171d3;
             text-decoration: none;

@@ -35,4 +35,7 @@ return [
     'project_description' => 'Description',
     'project_image' => 'Project Image',
     'deconnect' => 'Disconnect',
+    'NomComplet'=>'Name',
+    'cpassword' => 'Confirm password',
+    'Vcompte'=>'Already have an account ?',
 ];

@@ -18,8 +18,6 @@
         <li><strong>Vérifier les Détails du Projet :</strong> Vous pouvez accéder à une vue détaillée de chaque projet
             pour voir les informations, les collaborateurs. Les modifier ou les supprimer.</li>
     </ol>
-    <p>Vous pouvez utiliser ces étapes pour vérifier si les fonctionnalités de l'application sont conformes aux
-        exigences du TP1.</p>
     <br>
     <h2>Base de Données</h2>
     <p>La base de données actuelle de l'application est conçue pour stocker des informations sur les utilisateurs, les

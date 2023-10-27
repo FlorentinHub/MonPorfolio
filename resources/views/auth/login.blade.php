@@ -84,7 +84,7 @@
     .card {
         border: none;
         border-radius: 10px;
-        box-shadow: 0 10px 10px -3px rgba(255, 255, 255, 0.8);
+        box-shadow: 0 20px 20px -3px #016DCC;
     }
 
     .card-body {
