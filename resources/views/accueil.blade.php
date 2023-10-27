@@ -9,7 +9,7 @@
         href="https://cdn.discordapp.com/attachments/1080262834484682772/1162839789381357639/FT.png?ex=653d65f2&is=652af0f2&hm=7e16de0971a1cd0d52bfe22955db19abb4a8ffc934ab17658170173391cd2e8c&">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700,800'
         rel='stylesheet' type='text/css'>
-    <title> Florentin Toupet</title>
+    <title>Florentin Toupet</title>
 
     <script>
         async function getGitHubAvatar(username) {
@@ -31,9 +31,8 @@
             return 'URL_de_votre_image_par_defaut.jpg';
         }
     </script>
-
-
 </head>
+
 @include('navbar', ['appName' => 'Florentin Toupet'])
 
 <body>
@@ -43,9 +42,9 @@
     @section('content')
         <section class="hero">
             <div class="hero-content">
-                <h1>Bienvenue sur mon Portfolio</h1>
-                <p>Découvrez qui je suis grâce à ce petit projet personnel. Développé grâce à php en utilisant Laravel</p>
-                <a href="#projets" class="btn">Découvrir mes Projets</a>
+                <h1>{{ __('auth.welcome') }}</h1>
+                <p>{{ __('auth.laravel') }}</p>
+                <a href="#projets" class="btn">{{ __('auth.discover_my_projects') }}</a>
             </div>
         </section>
         <section class="projets" id="projets">
@@ -60,19 +59,21 @@
                             <div class="left_col">
                                 <div class="followers">
                                     <div class="follow_count">{{ $projet->complexite }}</div>
-                                    Complexité
+                                    {{ __('auth.complexity') }}
                                 </div>
                                 <div class="following">
                                     <div class="follow_count">{{ $projet->pourcentage_complet }}</div>
-                                    Note finale
+                                    {{ __('auth.final_grade') }}
                                 </div><br>
                                 <div class="following">
                                     <div class="follow_count"></div>
-                                    <a href="{{ route('projet.details', $projet->id) }}" class="btn">Détails</a><br>
+                                    <a href="{{ route('projet.details', $projet->id) }}"
+                                        class="btn">{{ __('auth.details') }}</a><br>
                                     @if (auth()->check() && auth()->user()->isAdmin)
-                                        <a href="{{ route('projet.edit', $projet->id) }}" class="btn">Modifier</a><br>
+                                        <a href="{{ route('projet.edit', $projet->id) }}"
+                                            class="btn">{{ __('auth.edit') }}</a><br>
                                         <a href="{{ route('projet.confirmDelete', $projet->id) }}"
-                                            class="btn btn-danger">Supprimer</a>
+                                            class="btn btn-danger">{{ __('auth.delete') }}</a>
                                     @endif
                                 </div>
                             </div>
@@ -80,7 +81,7 @@
                                 <h2 class="name">{{ $projet->nom_projet }}</h2>
                                 <h3 class="location">{{ $projet->type_projet }}</h3>
                                 <ul class="contact_information">
-                                    <li class="work">Description</li>
+                                    <li class="work">{{ __('auth.description') }}</li>
                                     <li class="description">{{ $projet->description }}</li>
                                 </ul>
                             </div>
@@ -92,7 +93,7 @@
         <footer>
             <p>&copy; 2023 - FlorentinToupet</p>
             @if (auth()->check())
-                <p>Connecté en tant que <b>{{ auth()->user()->name }}</b></p>
+                <p>{{ __('auth.logged_in_as', ['name' => auth()->user()->name]) }}</p>
             @endif
         </footer>
     </body>
@@ -187,11 +188,8 @@
             user-select: none;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            /* Trois colonnes avec une largeur égale */
             gap: 20px;
-            /* Espace entre les cartes */
             justify-content: center;
-            /* Centre les colonnes horizontalement */
             padding: 80px 0;
         }
 
@@ -219,7 +217,6 @@
 
         div.portfoliocard {
             background: rgba(40, 40, 40, 1);
-            /* Fond sombre */
             border: 1px solid rgba(0, 0, 0, 0.7);
             box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.1),
                 0px 2px 6px rgba(0, 0, 0, 0.5);
@@ -227,6 +224,8 @@
             margin: 30px auto;
             overflow: hidden;
             z-index: 100;
+            margin-left: 30px;
+            margin-right: 30px;
         }
 
         div.portfoliocard div.coverphoto {
@@ -240,6 +239,7 @@
                 1px 0px 2px rgba(255, 255, 255, 0.7);
             z-index: 99;
         }
+
         div.portfoliocard div.coverphoto img {
             width: 100%;
             height: 100%;
@@ -334,11 +334,8 @@
 
         div.portfoliocard ul.contact_information li.description {
             border-bottom: none;
-            /* Supprime la ligne grise sous la description */
             padding-left: 0;
-            /* Supprime l'espace à gauche de la description */
             margin-left: 0;
-            /* Supprime la marge à gauche de la description */
         }
 
         div.portfoliocard ul.contact_information li:hover:before {
@@ -387,8 +384,8 @@
         @if (session('error'))
             Swal.fire({
                 icon: 'error',
-                title: 'Erreur',
-                text: 'Vous n\'êtes pas autorisé à accéder à cette page en tant qu\'administrateur.', // Utilisez html au lieu de text
+                title: '{{ __('auth.error') }}',
+                text: '{{ __('auth.admin_access_error') }}',
                 customClass: {
                     popup: 'custom-swal2-popup',
                     title: 'custom-swal2-title',

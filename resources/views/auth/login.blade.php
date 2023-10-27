@@ -23,7 +23,6 @@
                                         <strong>{{ __('auth.failed') }}</strong>
                                     </span>
                                 </div>
-                                
                                 <div class="field input-field">
                                     <input type="password" placeholder="{{ __('auth.password') }}" class="password @error('password') is-invalid @enderror" id="password" name="password" required autocomplete="current-password">
                                     <i class='bx bx-hide eye-icon'></i>
@@ -33,11 +32,9 @@
                                         </span>
                                     @enderror
                                 </div>
-
                                 <div class="form-link">
                                     <a href="{{ route('password.request') }}" class="forgot-pass">{{ __('auth.forgot_password') }}</a>
                                 </div>
-
                                 <div class="field button-field">
                                     <button type="submit">{{ __('auth.login') }}</button>
                                 </div>
@@ -45,7 +42,7 @@
                         </form>
                         <div class="line"></div>
                         <div class="form-link">
-                            <span>{{ __("Vous n'avez pas de compte ?") }} <a href="{{ route('register') }}" class="link signup-link">{{ __('auth.no_account') }}</a></span>
+                            <span>{{ __("auth.no_account") }} <a href="{{ route('register') }}" class="link signup-link">{{ __('auth.register') }}</a></span>
                         </div>
                     </div>
                 </div>
@@ -184,7 +181,7 @@
     }
 
     .line::before {
-        content: 'Ou';
+        content: 'Florentin Toupet';
         position: absolute;
         top: 50%;
         left: 50%;

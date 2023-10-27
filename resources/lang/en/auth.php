@@ -1,23 +1,36 @@
 <?php
-
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
+    'app_name'=> 'Florentin Toupet',
     'login' => 'Log In',
+    'register' => 'Sign in',
     'email' => 'E-Mail Address',
     'password' => 'Password',
     'remember' => 'Remember Me',
     'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'no_account' =>'You don\'t have an account ?',
+    'forgot_password'=> 'I forgot my password',
+    'ou'=>'or',
+    'home'=>'Home', //Accueil en francais
+    'my_projects'=>'My Projects',
+    'about'=> 'About me',
+    'admin'=>'Admin',
+    'addProject'=>'Add Project',
+    'addCollab'=>'Add Collaborator',
+    'welcome'=>'Welcome to my portfolio',
+    'laravel'=>'Find out who I am thanks to this little personal project. Developed using php using Laravel',//Francais:Découvrez qui je suis grâce à ce petit projet personnel. Développé grâce à php en utilisant Laravel
+    'complexity' => 'Complexity',
+    'final_grade' => 'Final Grade',
+    'details' => 'Details',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'admin_access_error' => 'You are not authorized to access this page as an administrator.',
+    'error' => 'Error',
+    'logged_in_as' => 'Logged in as :name',
+    'discover_my_projects'=>'Dicover my projects',
+    'project_information' => 'Project Information',
+    'project_type' => 'Project Type',
+    'github_link' => 'GitHub Link',
+    'project_description' => 'Description',
+    'project_image' => 'Project Image',
 ];
