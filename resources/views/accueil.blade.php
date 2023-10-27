@@ -8,30 +8,8 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700,800'
         rel='stylesheet' type='text/css'>
 
-    <script>
-        async function getGitHubAvatar(username) {
-            try {
-                console.log($ {
-                    username
-                });
-                console.log("test");
-                const response = await fetch(`https://api.github.com/users/${username}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.avatar_url) {
-                        return data.avatar_url;
-                    }
-                }
-            } catch (error) {
-                console.error('Erreur lors de la récupération de l\'avatar GitHub :', error);
-            }
-            return 'URL_de_votre_image_par_defaut.jpg';
-        }
-    </script>
 </head>
-
 @include('navbar', ['appName' => 'Florentin Toupet'])
-
 <body>
     @foreach ($projets as $projet)
     @endforeach

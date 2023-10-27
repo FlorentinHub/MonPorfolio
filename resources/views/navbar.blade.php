@@ -72,10 +72,9 @@
                 <li><a href="{{ route('register') }}">{{ __('auth.register') }}</a></li>
             @else
                 <li><a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Se
-                        Déconnecter</a>
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('auth.deconnect') }}</a>
                 </li>
-
                 @if (auth()->user()->isAdmin)
                     <li class="dropdown">
                         <a href="#" class="dropbtn">{{ __('auth.admin') }}</a>
@@ -176,6 +175,7 @@
     header {
         background-color: #111;
         padding: 20px 0;
+        user-select: none;
     }
 
     nav {

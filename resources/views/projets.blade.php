@@ -1,3 +1,22 @@
+<script>
+    async function getGitHubAvatar(username) {
+        try {
+            console.log($ {
+                username
+            });
+            const response = await fetch(`https://api.github.com/users/${username}`);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.avatar_url) {
+                    return data.avatar_url;
+                }
+            }
+        } catch (error) {
+            console.error('Erreur lors de la récupération de l\'avatar GitHub :', error);
+        }
+        return 'URL_de_votre_image_par_defaut.jpg';
+    }
+</script>
 <section class="projets" id="projets">
     <div class="row">
         @foreach ($projets as $projet)
@@ -31,10 +50,8 @@
                     <div class="right_col">
                         <h2 class="name">{{ $projet->nom_projet }}</h2>
                         <h3 class="location">{{ $projet->type_projet }}</h3>
-                        <ul class="contact_information">
-                            <li class="work">{{ __('auth.description') }}</li>
-                            <li class="description">{{ $projet->description }}</li>
-                        </ul>
+                        <div style="margin-left: 15px" class="name">{{ __('auth.description')}}</div>
+                        <h3 class="location">{{ $projet->description }}</h3>
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@
 @extends('layout')
 @section('content')
     <div class="project-details">
+        <script src="{{ asset('github.js') }}"></script>
         <h2>{{ $projet->nom_projet }}</h2>
         <form>
             <fieldset>
@@ -28,9 +29,54 @@
                 </div>
                 <div class="form-group">
                     <label for="imageProjet">{{ __('auth.project_image') }}</label>
-                    <img src="{{ asset('storage/' . $projet->image_projet) }}" alt="{{ $projet->nom_projet }}" width="300">
+                    <img src="{{ asset('storage/' . $projet->image_projet) }}" alt="{{ $projet->nom_projet }}"
+                        width="300">
                 </div>
             </fieldset>
+            <ul class="collaborateurs">
+                @if ($projet->collaborateurs->isNotEmpty())
+                    @foreach ($projet->collaborateurs as $collaborateur)
+                        <li>
+                            <strong>{{ $collaborateur->nom_collaborateur }}</strong>
+                            <br>    
+                            GitHub Username: {{ $collaborateur->compte_github }}
+                            <br>
+                            Email: {{ $collaborateur->contact_courriel }}
+                            <br>
+                            Degree of Involvement: {{ $collaborateur->degres_implications }}
+                            <br>
+                            @if ($collaborateur->compte_github)
+                                <img src="{{ asset('https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png') }}"
+                                    alt="{{ $collaborateur->nom_collaborateur }}" width="100">
+                                <script>
+                                    async function getGitHubAvatar(username) {
+                                        try {
+                                            const response = await fetch(`https://api.github.com/users/${username}`);
+                                            if (response.ok) {
+                                                const data = await response.json();
+                                                if (data.avatar_url) {
+                                                    return data.avatar_url;
+                                                }
+                                            }
+                                        } catch (error) {
+                                            console.error('Error fetching GitHub avatar:', error);
+                                        }
+                                        return 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png';
+                                    }
+                                    getGitHubAvatar("{{ $collaborateur->compte_github }}").then(avatarUrl => {
+                                        const img = document.querySelector(`img[alt="{{ $collaborateur->nom_collaborateur }}"]`);
+                                        if (img) {
+                                            img.src = avatarUrl;
+                                        }
+                                    });
+                                </script>
+                            @endif
+                        </li>
+                    @endforeach
+                @else
+                    <li>No collaborators found.</li>
+                @endif
+            </ul>
         </form>
     </div>
 @endsection
@@ -46,6 +92,7 @@
         margin: 0 auto;
         color: black;
     }
+
     .form-group img {
         min-width: 100%;
         height: auto;
@@ -54,24 +101,29 @@
         border: 1px solid #ddd;
         border-radius: 5px;
     }
+
     form {
         background-color: #fff;
         border: 1px solid #ddd;
         border-radius: 5px;
         padding: 20px;
     }
+
     legend {
         font-weight: bold;
         color: black;
     }
+
     .form-group {
         margin-bottom: 20px;
     }
+
     label {
         display: block;
         font-weight: bold;
         color: black;
     }
+
     input[type="text"],
     textarea {
         width: 100%;
@@ -81,14 +133,17 @@
         font-size: 16px;
         margin-top: 5px;
     }
+
     textarea {
         height: 100px;
     }
+
     a {
         text-decoration: none;
         color: #007BFF;
         font-weight: bold;
     }
+
     input[type="text"][readonly],
     textarea[readonly] {
         background-color: #ffffff;

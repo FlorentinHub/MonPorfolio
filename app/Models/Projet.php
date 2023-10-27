@@ -23,4 +23,8 @@ class Projet extends Model
     {
         return $this->belongsToMany(Collaborateur::class);
     }
+    public function collaborateur()
+    {
+        return $this->belongsTo(Collaborateur::class);
+    }
 }

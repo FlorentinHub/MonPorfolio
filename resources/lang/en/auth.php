@@ -34,4 +34,5 @@ return [
     'github_link' => 'GitHub Link',
     'project_description' => 'Description',
     'project_image' => 'Project Image',
+    'deconnect' => 'Disconnect',
 ];
