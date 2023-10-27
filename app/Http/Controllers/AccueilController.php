@@ -14,4 +14,10 @@ class AccueilController extends Controller
         $projets = $projetController->index();
         return view('accueil', ['projets' => $projets]);
     }
+    public function showProjects()
+    {
+        $projetController = new ProjetController();
+        $projets = $projetController->index();
+        return view('showProjects', ['projets' => $projets]);
+    }
 }

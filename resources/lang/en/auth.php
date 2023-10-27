@@ -11,6 +11,7 @@ return [
     'no_account' =>'You don\'t have an account ?',
     'forgot_password'=> 'I forgot my password',
     'ou'=>'or',
+    'description'=>'Description',
     'home'=>'Home', //Accueil en francais
     'my_projects'=>'My Projects',
     'about'=> 'About me',

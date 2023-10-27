@@ -1,3 +1,4 @@
+@include('navbar', ['appName' => 'Florentin Toupet'])
 @extends('layout')
 @section('content')
     <h1>Confirmer la suppression du projet : {{ $projet->nom_projet }}</h1>

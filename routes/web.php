@@ -11,7 +11,7 @@ Route::get('lang/switch/{locale}', [LocalizationController::class, 'index'])->na
 Route::get('lang/{locale}', [LocalizationController::class, 'index'])->name('lang');
 
 
-Route::get('/', [AccueilController::class, 'index'])->name('accueil');
+// Route::get('/', [AccueilController::class, 'index'])->name('accueil');
 
 // La route pour la page de renvoi du courriel de confirmation
 Route::get('/verification', function () {
@@ -28,13 +28,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 Route::get('/ajouter-projet', [ProjetController::class, 'index']);
 Route::get('/ajouter-projet', [ProjetController::class, 'create']);
-// Route::get('/ajouter-projet', function(){
-//     return view('ajoutProjet');
-// });
-// Route::get('/', [ProjetController::class, 'index']);
 Route::post('/projet', [ProjetController::class, 'store']);
 
-
+Route::get('/projects', [AccueilController::class, 'showProjects']);
 
 Auth::routes(['verify' => true]);
 Auth::routes();
@@ -58,10 +54,6 @@ Route::post('/ajouter-collaborateur', [CollaborateurController::class, 'store'])
 Route::group(['middleware' => ['auth']], function() {
     //only verified account can access with this group
     Route::group(['middleware' => ['verified']], function() {
-            /**
-             * Dashboard Routes
-             */
-            
             Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
     });
 });

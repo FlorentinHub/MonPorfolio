@@ -8,7 +8,7 @@
             <img src="https://media.discordapp.net/attachments/1080262834484682772/1162987133842239488/ft_3_blanc.png?ex=653def2b&is=652b7a2b&hm=ec3800fc4d1decc05cfd53af6d69eafe923d067b1548130b8d5089086a479262&=&width=117&height=200"
                 alt="Votre Logo" class="logo">
         </a>
-        <div class="logo">{{ $appName }}</div>
+        {{-- <div class="logo">{{ $appName }}</div> --}}
         <ul class="nav-links">
             <li><a href="/">{{ __('auth.home') }}</a></li>
             <li><a href="/projects">{{ __('auth.my_projects') }}</a></li>

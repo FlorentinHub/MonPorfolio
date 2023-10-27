@@ -1,5 +1,5 @@
+@include('navbar', ['appName' => 'Florentin Toupet'])
 @extends('layout')
-
 @section('content')
     <h1>Modifier le projet : {{ $projet->nom_projet }}</h1>
 

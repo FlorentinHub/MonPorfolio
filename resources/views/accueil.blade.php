@@ -5,11 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../public/acceuil.css">
-    <link rel="icon"
-        href="https://cdn.discordapp.com/attachments/1080262834484682772/1162839789381357639/FT.png?ex=653d65f2&is=652af0f2&hm=7e16de0971a1cd0d52bfe22955db19abb4a8ffc934ab17658170173391cd2e8c&">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600,700,800'
         rel='stylesheet' type='text/css'>
-    <title>Florentin Toupet</title>
 
     <script>
         async function getGitHubAvatar(username) {
@@ -47,55 +44,8 @@
                 <a href="#projets" class="btn">{{ __('auth.discover_my_projects') }}</a>
             </div>
         </section>
-        <section class="projets" id="projets">
-            <div class="row">
-                @foreach ($projets as $projet)
-                    <div class="col-md-6">
-                        <div class="portfoliocard">
-                            <div class="coverphoto">
-                                <img class="coverphoto" src="{{ asset('storage/' . $projet->image_projet) }}"
-                                    alt="{{ $projet->nom_projet }}">
-                            </div>
-                            <div class="left_col">
-                                <div class="followers">
-                                    <div class="follow_count">{{ $projet->complexite }}</div>
-                                    {{ __('auth.complexity') }}
-                                </div>
-                                <div class="following">
-                                    <div class="follow_count">{{ $projet->pourcentage_complet }}</div>
-                                    {{ __('auth.final_grade') }}
-                                </div><br>
-                                <div class="following">
-                                    <div class="follow_count"></div>
-                                    <a href="{{ route('projet.details', $projet->id) }}"
-                                        class="btn">{{ __('auth.details') }}</a><br>
-                                    @if (auth()->check() && auth()->user()->isAdmin)
-                                        <a href="{{ route('projet.edit', $projet->id) }}"
-                                            class="btn">{{ __('auth.edit') }}</a><br>
-                                        <a href="{{ route('projet.confirmDelete', $projet->id) }}"
-                                            class="btn btn-danger">{{ __('auth.delete') }}</a>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="right_col">
-                                <h2 class="name">{{ $projet->nom_projet }}</h2>
-                                <h3 class="location">{{ $projet->type_projet }}</h3>
-                                <ul class="contact_information">
-                                    <li class="work">{{ __('auth.description') }}</li>
-                                    <li class="description">{{ $projet->description }}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </section>
-        <footer>
-            <p>&copy; 2023 - FlorentinToupet</p>
-            @if (auth()->check())
-                <p>{{ __('auth.logged_in_as', ['name' => auth()->user()->name]) }}</p>
-            @endif
-        </footer>
+        @include('projets') 
+        @include('footer')
     </body>
     <style>
         body,

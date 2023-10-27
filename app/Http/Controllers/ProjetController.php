@@ -15,7 +15,6 @@ class ProjetController extends Controller
         $projets = Projet::all(); // Récupére tous les projets depuis la base de données
         return $projets;
     }
-
     public function create()
     {
         $collaborateursController = new CollaborateurController();
