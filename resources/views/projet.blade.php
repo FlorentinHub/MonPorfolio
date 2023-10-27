@@ -33,12 +33,13 @@
                         width="300">
                 </div>
             </fieldset>
+
             <ul class="collaborateurs">
                 @if ($projet->collaborateurs->isNotEmpty())
                     @foreach ($projet->collaborateurs as $collaborateur)
                         <li>
                             <strong>{{ $collaborateur->nom_collaborateur }}</strong>
-                            <br>    
+                            <br>
                             GitHub Username: {{ $collaborateur->compte_github }}
                             <br>
                             Email: {{ $collaborateur->contact_courriel }}
@@ -49,7 +50,18 @@
                                 <img src="{{ asset('https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png') }}"
                                     alt="{{ $collaborateur->nom_collaborateur }}" width="100">
                                 <script>
+                                    function parseGitHubUsername(githubLink) {
+                                        const parts = githubLink.split('/');
+                                        if (parts.length > 3 && parts[3]) {
+                                            return parts[3];
+                                        } else {
+                                            return null;
+                                        }
+                                    }
                                     async function getGitHubAvatar(username) {
+                                        console.log("username: " + username)
+                                        username = parseGitHubUsername(username);
+                                        console.log("username: " + username)
                                         try {
                                             const response = await fetch(`https://api.github.com/users/${username}`);
                                             if (response.ok) {
