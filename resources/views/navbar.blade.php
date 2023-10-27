@@ -5,7 +5,7 @@
 <header>
     <nav>
         <a href="{{ route('accueil') }}" class="logo-link">
-            <img src="https://media.discordapp.net/attachments/1080262834484682772/1162987133842239488/ft_3_blanc.png?ex=653def2b&is=652b7a2b&hm=ec3800fc4d1decc05cfd53af6d69eafe923d067b1548130b8d5089086a479262&=&width=117&height=200"
+            <img src="https://media.discordapp.net/attachments/1080262834484682772/1167309292039307355/ft_300ppp.png?ex=654da87e&is=653b337e&hm=b12fafeb68f5ee4401d0ef8d13a3391585b1ebf8eebda0933c53bed84cc1dcbc&=&width=351&height=603"
                 alt="Votre Logo" class="logo">
         </a>
         {{-- <div class="logo">{{ $appName }}</div> --}}
@@ -151,7 +151,6 @@
 
     .logo {
         width: 40px;
-        height: 40px;
     }
 
     .logo-link:hover {

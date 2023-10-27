@@ -14,6 +14,7 @@
                                     src="https://media.discordapp.net/attachments/1080262834484682772/1162987134437822585/ft_1_blanc.png?ex=654729ac&is=6534b4ac&hm=449665e1808f3ff3c1cfdb41ee5a0802ac2c9ed5fe95c0cfdfff7cd5f805e8c8&=&width=338&height=250">
 
                                 <header class="headerForm">S'inscrire</header>
+                                <strong class="invisible">These credentials do not match our records.</strong>
                                 <span class="invalid-feedback cache">
                                     <strong>These credentials do not match our records.</strong>
                                 </span>
@@ -248,6 +249,10 @@
 
         .signup-link:hover {
             text-decoration: underline;
+        }
+        .invisible{
+            color: transparent;
+            user-select: none;
         }
     </style>
 @endsection
