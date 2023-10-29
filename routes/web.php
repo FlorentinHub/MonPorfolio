@@ -9,11 +9,20 @@ use App\Http\Controllers\LocalizationController;
 
 Route::get('lang/switch/{locale}', [LocalizationController::class, 'index'])->name('lang.switch');
 Route::get('lang/{locale}', [LocalizationController::class, 'index'])->name('lang');
+
+
 // Route::get('/', [AccueilController::class, 'index'])->name('accueil');
 
+// La route pour la page de renvoi du courriel de confirmation
+Route::get('/verification', function () {
+    return view('auth.emails.confirmation');
+})->name('verification.notice')->middleware('auth');
+
 // Seuls les utilisateurs vérifiés peuvent accéder aux routes suivantes
-Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
-Route::get('/', [AccueilController::class, 'index'])->name('accueil');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
+    Route::get('/', [AccueilController::class, 'index'])->name('accueil');
+});
 
 
 
@@ -43,4 +52,11 @@ Route::delete('/projet/{id}', [ProjetController::class, 'destroy'])->name('proje
 Route::get('/ajouter-collaborateur', [CollaborateurController::class, 'create'])->name('ajouter-collaborateur')->middleware('checkadmin');
 Route::post('/ajouter-collaborateur', [CollaborateurController::class, 'store']);
 
-Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
+
+//only authenticated can access this group
+Route::group(['middleware' => ['auth']], function () {
+    //only verified account can access with this group
+    Route::group(['middleware' => ['verified']], function () {
+        Route::get('/projet/{id}', [ProjetController::class, 'details'])->name('projet.details');
+    });
+});
